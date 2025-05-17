@@ -31,12 +31,12 @@ class Assistant:
         self.httpx_client = httpx.AsyncClient()
         self.finish_event = asyncio.Event()
         self.file_id = None
-        self.language = 'en'  # Default language
+        self.language = 'fr'  # Default language
 
     def get_tts_url(self):
         if self.language == 'fr':
             return 'https://api.deepgram.com/v1/speak?model=aura-2-orpheus-fr'
-        return 'https://api.deepgram.com/v1/speak?model=aura-2-orpheus-en'
+        return 'https://api.deepgram.com/v1/speak?model=aura-2-orpheus-fr'
 
     def get_stt_options(self):
         return LiveOptions(
@@ -142,7 +142,7 @@ class Assistant:
                             self.file_id = await self.add_pdf_context(data.get("content"))
                         elif data.get("type") == "set_language":
                             lang = data.get("content")
-                            if lang in ["en", "fr"]:
+                            if lang in ["fr", "fr"]:
                                 self.language = lang
                                 await self.websocket.send_json({"type": "info", "content": f"Language set to {lang}"})
                         else:
